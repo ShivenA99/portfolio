@@ -8,22 +8,20 @@ import { navLinks } from "@/lib/data";
 import { useSectionObserver } from "@/hooks/useSectionObserver";
 
 export default function Navbar() {
-  const [scrollDirection, setScrollDirection] = useState<"up" | "down">("up");
+  const [visible, setVisible] = useState(true);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [mounted, setMounted] = useState(false);
   const { theme, setTheme } = useTheme();
   const { activeSection, accent } = useSectionObserver();
 
-  const compressed = scrollDirection === "down";
-
   const handleScroll = useCallback(() => {
     const currentY = window.scrollY;
-    // Store previous scroll position on the window object
-    const prevY = (window as unknown as { __prevScrollY?: number }).__prevScrollY ?? 0;
+    const prevY =
+      (window as unknown as { __prevScrollY?: number }).__prevScrollY ?? 0;
     if (currentY > prevY && currentY > 80) {
-      setScrollDirection("down");
+      setVisible(false);
     } else if (currentY < prevY) {
-      setScrollDirection("up");
+      setVisible(true);
     }
     (window as unknown as { __prevScrollY: number }).__prevScrollY = currentY;
   }, []);
@@ -34,33 +32,36 @@ export default function Navbar() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, [handleScroll]);
 
+  const scrollToTop = (e: React.MouseEvent) => {
+    e.preventDefault();
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+
   return (
     <motion.nav
       initial={{ y: -100 }}
-      animate={{ y: 0 }}
-      transition={{ duration: 0.5, ease: "easeOut" }}
+      animate={{ y: visible ? 0 : -100 }}
+      transition={{ duration: 0.3, ease: [0.25, 0.1, 0.25, 1] as const }}
       className="fixed top-0 left-0 right-0 z-50"
       style={{
         borderBottom: `1px solid ${accent}0A`,
         backgroundColor: "rgba(3, 7, 18, 0.85)",
+        backdropFilter: "blur(12px)",
       }}
     >
-      <div className="mx-auto max-w-6xl px-4 sm:px-6">
-        <div
-          className={`flex items-center justify-between transition-all duration-300 ${
-            compressed ? "h-12" : "h-16"
-          }`}
-        >
+      <div className="max-w-6xl mx-auto px-6 md:px-12">
+        <div className="flex items-center justify-between h-16">
           {/* Logo */}
           <a
             href="#"
-            className="font-mono text-lg font-bold tracking-tight text-foreground"
+            onClick={scrollToTop}
+            className="font-mono font-bold text-lg tracking-wider text-foreground"
           >
             SA
           </a>
 
           {/* Center: Desktop links */}
-          <div className="hidden md:flex items-center gap-1">
+          <div className="hidden md:flex items-center gap-8">
             {navLinks.map((link) => {
               const sectionId = link.href.replace("#", "");
               const isActive = activeSection === sectionId;
@@ -68,38 +69,56 @@ export default function Navbar() {
                 <a
                   key={link.href}
                   href={link.href}
-                  className="px-3 py-1.5 text-sm transition-colors duration-200 rounded"
+                  className="relative text-sm transition-colors duration-200 pb-1"
                   style={{
                     color: isActive ? accent : undefined,
                   }}
                 >
                   <span
                     className={
-                      isActive ? "font-medium" : "text-muted hover:text-foreground"
+                      isActive
+                        ? "font-medium"
+                        : "text-muted hover:text-foreground"
                     }
                   >
                     {link.label}
                   </span>
+                  {/* Active underline indicator */}
+                  <span
+                    className="absolute bottom-0 left-0 h-[2px] transition-all duration-300"
+                    style={{
+                      width: isActive ? "100%" : "0%",
+                      backgroundColor: accent,
+                    }}
+                  />
                 </a>
               );
             })}
           </div>
 
           {/* Right: Theme toggle + Resume */}
-          <div className="hidden md:flex items-center gap-2">
+          <div className="hidden md:flex items-center gap-4">
             {mounted && (
               <button
                 onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
-                className="p-2 rounded text-muted hover:text-foreground transition-colors"
+                className="p-2 rounded text-muted hover:text-foreground transition-colors duration-200"
                 aria-label="Toggle theme"
               >
-                {theme === "dark" ? <Sun size={16} /> : <Moon size={16} />}
+                <motion.span
+                  key={theme}
+                  initial={{ rotate: -90, opacity: 0 }}
+                  animate={{ rotate: 0, opacity: 1 }}
+                  transition={{ duration: 0.3, ease: [0.25, 0.1, 0.25, 1] as const }}
+                  className="block"
+                >
+                  {theme === "dark" ? <Sun size={16} /> : <Moon size={16} />}
+                </motion.span>
               </button>
             )}
             <a
               href="/portfolio/resume.pdf"
               download
-              className="flex items-center gap-1.5 px-3 py-1.5 text-sm font-mono rounded border transition-colors"
+              className="flex items-center gap-1.5 px-4 py-2 text-sm font-mono rounded-lg border transition-colors duration-200"
               style={{
                 borderColor: `${accent}33`,
                 color: accent,
@@ -115,15 +134,23 @@ export default function Navbar() {
             {mounted && (
               <button
                 onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
-                className="p-2 rounded text-muted hover:text-foreground transition-colors"
+                className="p-2 rounded text-muted hover:text-foreground transition-colors duration-200"
                 aria-label="Toggle theme"
               >
-                {theme === "dark" ? <Sun size={16} /> : <Moon size={16} />}
+                <motion.span
+                  key={theme}
+                  initial={{ rotate: -90, opacity: 0 }}
+                  animate={{ rotate: 0, opacity: 1 }}
+                  transition={{ duration: 0.3, ease: [0.25, 0.1, 0.25, 1] as const }}
+                  className="block"
+                >
+                  {theme === "dark" ? <Sun size={16} /> : <Moon size={16} />}
+                </motion.span>
               </button>
             )}
             <button
               onClick={() => setMobileOpen(!mobileOpen)}
-              className="p-2 rounded text-muted hover:text-foreground transition-colors"
+              className="p-2 rounded text-muted hover:text-foreground transition-colors duration-200"
               aria-label="Toggle menu"
             >
               {mobileOpen ? <X size={20} /> : <Menu size={20} />}
@@ -146,7 +173,7 @@ export default function Navbar() {
               borderTop: `1px solid ${accent}0A`,
             }}
           >
-            <div className="px-4 py-3 space-y-1">
+            <div className="px-6 py-3 space-y-1">
               {navLinks.map((link) => {
                 const sectionId = link.href.replace("#", "");
                 const isActive = activeSection === sectionId;
@@ -155,7 +182,7 @@ export default function Navbar() {
                     key={link.href}
                     href={link.href}
                     onClick={() => setMobileOpen(false)}
-                    className="block px-3 py-2 text-sm rounded transition-colors"
+                    className="block px-3 py-2 text-sm rounded transition-colors duration-200"
                     style={{
                       color: isActive ? accent : undefined,
                     }}
@@ -175,7 +202,7 @@ export default function Navbar() {
               <a
                 href="/portfolio/resume.pdf"
                 download
-                className="flex items-center gap-1.5 px-3 py-2 text-sm font-mono transition-colors"
+                className="flex items-center gap-1.5 px-3 py-2 text-sm font-mono transition-colors duration-200"
                 style={{ color: accent }}
               >
                 <Download size={14} />
