@@ -1,15 +1,15 @@
 "use client";
 
-import SmoothScroll from "@/components/SmoothScroll";
-import Navbar from "@/components/Navbar";
-import Hero from "@/components/Hero";
-import About from "@/components/About";
-import Experience from "@/components/Experience";
-import Projects from "@/components/Projects";
-import Publications from "@/components/Publications";
-import Skills from "@/components/Skills";
-import Contact from "@/components/Contact";
-import Footer from "@/components/Footer";
+import SmoothScroll from "@/components/providers/SmoothScroll";
+import Navbar from "@/components/layout/Navbar";
+import Footer from "@/components/layout/Footer";
+import Hero from "@/components/sections/Hero";
+import About from "@/components/sections/About";
+import Experience from "@/components/sections/Experience";
+import Projects from "@/components/sections/Projects";
+import Publications from "@/components/sections/Publications";
+import Skills from "@/components/sections/Skills";
+import Contact from "@/components/sections/Contact";
 
 export default function Home() {
   return (
