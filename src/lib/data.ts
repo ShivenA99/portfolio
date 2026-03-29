@@ -1,3 +1,26 @@
+// ──────────────────────────────────────────────
+// Portfolio Data — Single Source of Truth
+// ──────────────────────────────────────────────
+
+// ── Types ────────────────────────────────────
+
+export interface PersonalInfo {
+  name: string;
+  title: string;
+  email: string;
+  phone: string;
+  github: string;
+  linkedin: string;
+  location: string;
+}
+
+export interface Section {
+  id: string;
+  label: string;
+  accent: string;
+  bgTint: string;
+}
+
 export interface NavLink {
   label: string;
   href: string;
@@ -40,16 +63,9 @@ export interface SkillCategory {
   items: string[];
 }
 
-export const navLinks: NavLink[] = [
-  { label: "About", href: "#about" },
-  { label: "Experience", href: "#experience" },
-  { label: "Projects", href: "#projects" },
-  { label: "Publications", href: "#publications" },
-  { label: "Skills", href: "#skills" },
-  { label: "Contact", href: "#contact" },
-];
+// ── Data ─────────────────────────────────────
 
-export const personalInfo = {
+export const personalInfo: PersonalInfo = {
   name: "Shiven Agarwal",
   title: "Graduate AI Researcher",
   email: "sagar147@asu.edu",
@@ -58,6 +74,25 @@ export const personalInfo = {
   linkedin: "https://www.linkedin.com/in/shiven-agarwal/",
   location: "Tempe, AZ",
 };
+
+export const sections: Section[] = [
+  { id: "hero", label: "Home", accent: "#10B981", bgTint: "#030712" },
+  { id: "about", label: "About", accent: "#0891B2", bgTint: "#061219" },
+  { id: "experience", label: "Experience", accent: "#F59E0B", bgTint: "#0F0D06" },
+  { id: "projects", label: "Projects", accent: "#A855F7", bgTint: "#0D0619" },
+  { id: "publications", label: "Publications", accent: "#FF6B6B", bgTint: "#140A0A" },
+  { id: "skills", label: "Skills", accent: "#E5E7EB", bgTint: "#0A0A0A" },
+  { id: "contact", label: "Contact", accent: "#10B981", bgTint: "#030712" },
+];
+
+export const navLinks: NavLink[] = [
+  { label: "About", href: "#about" },
+  { label: "Experience", href: "#experience" },
+  { label: "Projects", href: "#projects" },
+  { label: "Publications", href: "#publications" },
+  { label: "Skills", href: "#skills" },
+  { label: "Contact", href: "#contact" },
+];
 
 export const education: Education[] = [
   {
@@ -134,7 +169,7 @@ export const projects: Project[] = [
     title: "DeALOG",
     tag: "Multi-Agent QA",
     tagDetail: "ACL 2026 Under Review",
-    accent: "#34D399",
+    accent: "#A855F7",
     description:
       "Decentralized multi-agent framework for multimodal question answering.",
     tech: ["Python", "Multi-Agent", "LLMs"],
