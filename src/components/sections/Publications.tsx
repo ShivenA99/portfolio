@@ -14,64 +14,66 @@ export default function Publications() {
 
   return (
     <section id="publications" className="py-24 md:py-32 relative">
-      <div ref={ref} className="max-w-5xl mx-auto px-6 md:px-12">
+      <div ref={ref} className="max-w-6xl mx-auto px-6 md:px-12 py-24 md:py-32">
         {/* Section header */}
-        <motion.h2
+        <motion.p
           initial={{ opacity: 0, y: 20 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.5, ease }}
-          className="font-mono text-sm mb-12"
+          className="font-mono text-xs uppercase tracking-widest text-[#FF6B6B] mb-2"
         >
-          <span style={{ color: pubAccent }}>knowledge_base</span>
-          <span className="text-muted">/</span>
+          Publications
+        </motion.p>
+        <motion.h2
+          initial={{ opacity: 0, y: 20 }}
+          animate={inView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.5, delay: 0.05, ease }}
+          className="font-heading text-3xl font-bold mb-12"
+        >
+          Research Papers
         </motion.h2>
 
         {/* Paper entries */}
-        <div className="space-y-4">
+        <div className="flex flex-col">
           {publications.map((pub, idx) => (
             <motion.div
               key={pub.title}
               initial={{ opacity: 0, y: 16 }}
               animate={inView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.4, delay: 0.08 + idx * 0.08, ease }}
-              className="flex items-start gap-4 py-4"
+              transition={{ duration: 0.4, delay: 0.1 + idx * 0.1, ease }}
+              className="bg-white/[0.03] rounded-xl p-6 mb-4 hover:bg-white/[0.05] transition-all"
             >
-              {/* Status badge */}
-              <div className="shrink-0 pt-0.5">
-                {pub.status === "Accepted" ? (
-                  <span className="inline-block px-2 py-0.5 text-xs font-mono rounded-full bg-emerald-500/20 text-emerald-400">
-                    Accepted
-                  </span>
-                ) : (
-                  <span className="inline-block px-2 py-0.5 text-xs font-mono rounded-full border border-amber-500/30 text-amber-400">
-                    Under Review
-                  </span>
-                )}
-              </div>
+              <div className="flex flex-col gap-2">
+                {/* Top row: title + status badge */}
+                <div className="flex justify-between items-start">
+                  <p className="font-heading text-base font-semibold flex-1 mr-4">
+                    {pub.title}
+                  </p>
+                  {pub.status === "Accepted" ? (
+                    <span className="shrink-0 bg-emerald-500/15 text-emerald-400 px-3 py-1 rounded-full text-xs font-mono">
+                      Accepted
+                    </span>
+                  ) : (
+                    <span className="shrink-0 border border-amber-500/30 text-amber-400 px-3 py-1 rounded-full text-xs font-mono">
+                      Under Review
+                    </span>
+                  )}
+                </div>
 
-              {/* Title + venue */}
-              <div className="flex-1 min-w-0">
-                <p className="font-heading text-base font-medium text-foreground leading-snug">
-                  {pub.title}
-                </p>
-                <p className="font-mono text-xs text-muted mt-1">{pub.venue}</p>
-              </div>
+                {/* Venue + year */}
+                <p className="font-mono text-xs text-muted">{pub.venue}</p>
 
-              {/* arXiv link */}
-              <div className="shrink-0">
-                {pub.link ? (
+                {/* Links */}
+                {pub.link && (
                   <a
                     href={pub.link}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center gap-1 text-xs font-mono transition-colors duration-200 hover:underline underline-offset-4"
-                    style={{ color: pubAccent }}
+                    className="inline-flex items-center gap-1 font-mono text-xs text-[#FF6B6B] hover:underline underline-offset-4 w-fit"
                   >
                     arXiv
                     <ExternalLink size={11} />
                   </a>
-                ) : (
-                  <span className="text-xs font-mono text-muted/40">&mdash;</span>
                 )}
               </div>
             </motion.div>
