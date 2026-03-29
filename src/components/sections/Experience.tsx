@@ -2,84 +2,113 @@
 
 import { useRef } from "react";
 import { motion, useInView } from "framer-motion";
-import { Building2, Calendar } from "lucide-react";
-import { experience } from "@/lib/data";
+import { experience, education } from "@/lib/data";
+
+const fadeIn = {
+  hidden: { opacity: 0, y: 12 },
+  visible: (i: number) => ({
+    opacity: 1,
+    y: 0,
+    transition: { delay: i * 0.1, duration: 0.5, ease: "easeOut" as const },
+  }),
+};
 
 export default function Experience() {
   const ref = useRef(null);
-  const inView = useInView(ref, { once: true, margin: "-100px" });
+  const inView = useInView(ref, { once: true, margin: "-80px" });
 
   return (
     <section id="experience" className="py-24 relative" ref={ref}>
       <div className="mx-auto max-w-6xl px-4 sm:px-6">
-        {/* Section heading */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={inView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.6 }}
-          className="mb-16"
+        {/* Section header */}
+        <motion.h2
+          custom={0}
+          initial="hidden"
+          animate={inView ? "visible" : "hidden"}
+          variants={fadeIn}
+          className="font-mono text-sm mb-12"
         >
-          <h2 className="text-3xl sm:text-4xl font-bold font-heading mb-4">
-            Work <span className="gradient-text">Experience</span>
-          </h2>
-          <div className="w-16 h-1 bg-gradient-to-r from-emerald to-mint rounded-full" />
-        </motion.div>
+          <span style={{ color: "#F59E0B" }}>training_log</span>
+          <span className="text-muted">/</span>
+        </motion.h2>
 
-        {/* Timeline */}
-        <div className="relative">
-          {/* Vertical line */}
-          <div className="absolute left-4 md:left-8 top-0 bottom-0 w-px bg-gradient-to-b from-emerald/50 via-mint/30 to-transparent" />
-
-          <div className="space-y-12">
-            {experience.map((exp, idx) => (
-              <motion.div
-                key={exp.company}
-                initial={{ opacity: 0, x: -30 }}
-                animate={inView ? { opacity: 1, x: 0 } : {}}
-                transition={{ delay: 0.2 + idx * 0.2, duration: 0.6 }}
-                className="relative pl-12 md:pl-20"
-              >
-                {/* Timeline dot */}
-                <div className="absolute left-2.5 md:left-6.5 top-1 w-3 h-3 rounded-full bg-emerald ring-4 ring-emerald-dim" />
-
-                <div className="glass rounded-2xl p-6">
-                  {/* Header */}
-                  <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-4">
-                    <div>
-                      <h3 className="text-lg font-semibold font-heading">
-                        {exp.title}
-                      </h3>
-                      <div className="flex items-center gap-2 text-muted text-sm mt-1">
-                        <Building2 size={14} />
-                        <span>{exp.company}</span>
-                      </div>
-                    </div>
-                    <div className="flex items-center gap-2 text-sm text-muted shrink-0">
-                      <Calendar size={14} />
-                      <span>{exp.period}</span>
-                    </div>
-                  </div>
-
-                  {/* Location */}
-                  <p className="text-xs text-emerald mb-3">{exp.location}</p>
-
-                  {/* Bullets */}
-                  <ul className="space-y-2">
-                    {exp.bullets.map((bullet, i) => (
-                      <li
-                        key={i}
-                        className="flex items-start gap-3 text-sm text-muted"
-                      >
-                        <span className="mt-1.5 h-1.5 w-1.5 rounded-full bg-emerald shrink-0" />
-                        <span>{bullet}</span>
-                      </li>
-                    ))}
-                  </ul>
+        {/* Log entries */}
+        <div className="space-y-10">
+          {experience.map((exp, idx) => (
+            <motion.div
+              key={exp.company}
+              custom={1 + idx}
+              initial="hidden"
+              animate={inView ? "visible" : "hidden"}
+              variants={fadeIn}
+            >
+              {/* Timestamp + role */}
+              <div className="flex flex-col sm:flex-row sm:items-baseline gap-1 sm:gap-4 mb-3">
+                <span className="font-mono text-xs text-muted shrink-0">
+                  [{exp.period}]
+                </span>
+                <div>
+                  <span className="font-heading font-medium text-foreground">
+                    {exp.title}
+                  </span>
+                  <span className="text-muted"> @ </span>
+                  <span style={{ color: "#F59E0B" }}>{exp.company}</span>
                 </div>
-              </motion.div>
+              </div>
+
+              {/* Location */}
+              <p className="font-mono text-xs text-muted ml-0 sm:ml-[calc(theme(spacing.4)+140px)] mb-3">
+                {exp.location}
+              </p>
+
+              {/* Bullets - indented */}
+              <ul className="space-y-2 ml-0 sm:ml-[calc(theme(spacing.4)+140px)]">
+                {exp.bullets.map((bullet, i) => (
+                  <li
+                    key={i}
+                    className="flex items-start gap-2 text-sm text-muted"
+                  >
+                    <span
+                      className="mt-1.5 h-1 w-1 rounded-full shrink-0"
+                      style={{ backgroundColor: "#F59E0B" }}
+                    />
+                    <span>{bullet}</span>
+                  </li>
+                ))}
+              </ul>
+            </motion.div>
+          ))}
+        </div>
+
+        {/* Education - compact entries at bottom */}
+        <motion.div
+          custom={4}
+          initial="hidden"
+          animate={inView ? "visible" : "hidden"}
+          variants={fadeIn}
+          className="mt-16 pt-8"
+          style={{ borderTop: "1px solid rgba(245, 158, 11, 0.08)" }}
+        >
+          <p className="font-mono text-xs text-muted mb-6">education/</p>
+          <div className="space-y-4">
+            {education.map((edu) => (
+              <div
+                key={edu.school}
+                className="flex flex-col sm:flex-row sm:items-baseline gap-1 sm:gap-4"
+              >
+                <span className="font-mono text-xs text-muted shrink-0">
+                  [{edu.period}]
+                </span>
+                <div>
+                  <span className="text-sm font-heading font-medium text-foreground">
+                    {edu.degree}
+                  </span>
+                  <span className="text-sm text-muted"> &mdash; {edu.school}</span>
+                </div>
+              </div>
             ))}
           </div>
-        </div>
+        </motion.div>
       </div>
     </section>
   );

@@ -4,55 +4,60 @@ import { useRef } from "react";
 import { motion, useInView } from "framer-motion";
 import { skills } from "@/lib/data";
 
+const fadeIn = {
+  hidden: { opacity: 0, y: 12 },
+  visible: (i: number) => ({
+    opacity: 1,
+    y: 0,
+    transition: { delay: i * 0.1, duration: 0.5, ease: "easeOut" as const },
+  }),
+};
+
 export default function Skills() {
   const ref = useRef(null);
-  const inView = useInView(ref, { once: true, margin: "-100px" });
+  const inView = useInView(ref, { once: true, margin: "-80px" });
 
   return (
     <section id="skills" className="py-24 relative" ref={ref}>
       <div className="mx-auto max-w-6xl px-4 sm:px-6">
-        {/* Section heading */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={inView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.6 }}
-          className="mb-16"
+        {/* Section header */}
+        <motion.h2
+          custom={0}
+          initial="hidden"
+          animate={inView ? "visible" : "hidden"}
+          variants={fadeIn}
+          className="font-mono text-sm mb-12"
         >
-          <h2 className="text-3xl sm:text-4xl font-bold font-heading mb-4">
-            Tech <span className="gradient-text">Stack</span>
-          </h2>
-          <div className="w-16 h-1 bg-gradient-to-r from-emerald to-mint rounded-full" />
-        </motion.div>
+          <span style={{ color: "#E5E7EB" }}>capabilities</span>
+          <span className="text-muted">/</span>
+        </motion.h2>
 
-        {/* Skill categories */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+        {/* 4 columns */}
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-8">
           {skills.map((category, catIdx) => (
             <motion.div
               key={category.category}
-              initial={{ opacity: 0, y: 20 }}
-              animate={inView ? { opacity: 1, y: 0 } : {}}
-              transition={{ delay: 0.1 + catIdx * 0.1, duration: 0.6 }}
-              className="glass rounded-2xl p-6"
+              custom={1 + catIdx}
+              initial="hidden"
+              animate={inView ? "visible" : "hidden"}
+              variants={fadeIn}
             >
-              <h3 className="text-sm font-semibold font-heading text-emerald mb-4 uppercase tracking-wider">
+              {/* Category header - monospace */}
+              <h3 className="font-mono text-xs text-muted mb-4 uppercase tracking-wider">
                 {category.category}
               </h3>
-              <div className="flex flex-wrap gap-2">
-                {category.items.map((skill, skillIdx) => (
-                  <motion.span
+
+              {/* Skills as plain text list */}
+              <ul className="space-y-2">
+                {category.items.map((skill) => (
+                  <li
                     key={skill}
-                    initial={{ opacity: 0, scale: 0.8 }}
-                    animate={inView ? { opacity: 1, scale: 1 } : {}}
-                    transition={{
-                      delay: 0.2 + catIdx * 0.1 + skillIdx * 0.05,
-                      duration: 0.4,
-                    }}
-                    className="px-3 py-1.5 text-sm rounded-full bg-emerald-dim text-foreground border border-emerald/20 hover:border-emerald/40 hover:bg-emerald/15 transition-all cursor-default"
+                    className="text-sm text-foreground hover:text-white transition-colors cursor-default py-0.5"
                   >
                     {skill}
-                  </motion.span>
+                  </li>
                 ))}
-              </div>
+              </ul>
             </motion.div>
           ))}
         </div>

@@ -1,79 +1,129 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Menu, X, Sun, Moon } from "lucide-react";
+import { Menu, X, Sun, Moon, Download } from "lucide-react";
 import { useTheme } from "next-themes";
 import { navLinks } from "@/lib/data";
-import { cn } from "@/lib/utils";
+import { useSectionObserver } from "@/hooks/useSectionObserver";
 
 export default function Navbar() {
-  const [scrolled, setScrolled] = useState(false);
+  const [scrollDirection, setScrollDirection] = useState<"up" | "down">("up");
   const [mobileOpen, setMobileOpen] = useState(false);
-  const { theme, setTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
+  const { theme, setTheme } = useTheme();
+  const { activeSection, accent } = useSectionObserver();
+
+  const compressed = scrollDirection === "down";
+
+  const handleScroll = useCallback(() => {
+    const currentY = window.scrollY;
+    // Store previous scroll position on the window object
+    const prevY = (window as unknown as { __prevScrollY?: number }).__prevScrollY ?? 0;
+    if (currentY > prevY && currentY > 80) {
+      setScrollDirection("down");
+    } else if (currentY < prevY) {
+      setScrollDirection("up");
+    }
+    (window as unknown as { __prevScrollY: number }).__prevScrollY = currentY;
+  }, []);
 
   useEffect(() => {
     setMounted(true);
-    const onScroll = () => setScrolled(window.scrollY > 20);
-    window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
-  }, []);
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, [handleScroll]);
 
   return (
-    <nav
-      className={cn(
-        "fixed top-0 left-0 right-0 z-50 transition-all duration-300",
-        scrolled
-          ? "glass border-b border-card-border"
-          : "bg-transparent"
-      )}
+    <motion.nav
+      initial={{ y: -100 }}
+      animate={{ y: 0 }}
+      transition={{ duration: 0.5, ease: "easeOut" }}
+      className="fixed top-0 left-0 right-0 z-50"
+      style={{
+        borderBottom: `1px solid ${accent}0A`,
+        backgroundColor: "rgba(3, 7, 18, 0.85)",
+      }}
     >
       <div className="mx-auto max-w-6xl px-4 sm:px-6">
-        <div className="flex h-16 items-center justify-between">
+        <div
+          className={`flex items-center justify-between transition-all duration-300 ${
+            compressed ? "h-12" : "h-16"
+          }`}
+        >
           {/* Logo */}
-          <a href="#" className="text-lg font-bold font-heading">
-            <span className="gradient-text">SA</span>
+          <a
+            href="#"
+            className="font-mono text-lg font-bold tracking-tight text-foreground"
+          >
+            SA
           </a>
 
-          {/* Desktop links */}
+          {/* Center: Desktop links */}
           <div className="hidden md:flex items-center gap-1">
-            {navLinks.map((link) => (
-              <a
-                key={link.href}
-                href={link.href}
-                className="px-3 py-2 text-sm text-muted hover:text-foreground transition-colors rounded-lg hover:bg-card"
-              >
-                {link.label}
-              </a>
-            ))}
+            {navLinks.map((link) => {
+              const sectionId = link.href.replace("#", "");
+              const isActive = activeSection === sectionId;
+              return (
+                <a
+                  key={link.href}
+                  href={link.href}
+                  className="px-3 py-1.5 text-sm transition-colors duration-200 rounded"
+                  style={{
+                    color: isActive ? accent : undefined,
+                  }}
+                >
+                  <span
+                    className={
+                      isActive ? "font-medium" : "text-muted hover:text-foreground"
+                    }
+                  >
+                    {link.label}
+                  </span>
+                </a>
+              );
+            })}
+          </div>
 
-            {/* Theme toggle */}
+          {/* Right: Theme toggle + Resume */}
+          <div className="hidden md:flex items-center gap-2">
             {mounted && (
               <button
                 onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
-                className="ml-2 p-2 rounded-lg text-muted hover:text-foreground hover:bg-card transition-colors"
+                className="p-2 rounded text-muted hover:text-foreground transition-colors"
                 aria-label="Toggle theme"
               >
-                {theme === "dark" ? <Sun size={18} /> : <Moon size={18} />}
+                {theme === "dark" ? <Sun size={16} /> : <Moon size={16} />}
               </button>
             )}
+            <a
+              href="/portfolio/resume.pdf"
+              download
+              className="flex items-center gap-1.5 px-3 py-1.5 text-sm font-mono rounded border transition-colors"
+              style={{
+                borderColor: `${accent}33`,
+                color: accent,
+              }}
+            >
+              <Download size={14} />
+              Resume
+            </a>
           </div>
 
-          {/* Mobile buttons */}
+          {/* Mobile: buttons */}
           <div className="flex md:hidden items-center gap-2">
             {mounted && (
               <button
                 onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
-                className="p-2 rounded-lg text-muted hover:text-foreground hover:bg-card transition-colors"
+                className="p-2 rounded text-muted hover:text-foreground transition-colors"
                 aria-label="Toggle theme"
               >
-                {theme === "dark" ? <Sun size={18} /> : <Moon size={18} />}
+                {theme === "dark" ? <Sun size={16} /> : <Moon size={16} />}
               </button>
             )}
             <button
               onClick={() => setMobileOpen(!mobileOpen)}
-              className="p-2 rounded-lg text-muted hover:text-foreground hover:bg-card transition-colors"
+              className="p-2 rounded text-muted hover:text-foreground transition-colors"
               aria-label="Toggle menu"
             >
               {mobileOpen ? <X size={20} /> : <Menu size={20} />}
@@ -89,23 +139,52 @@ export default function Navbar() {
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: "auto" }}
             exit={{ opacity: 0, height: 0 }}
-            className="md:hidden glass border-t border-card-border overflow-hidden"
+            transition={{ duration: 0.2 }}
+            className="md:hidden overflow-hidden"
+            style={{
+              backgroundColor: "rgba(3, 7, 18, 0.95)",
+              borderTop: `1px solid ${accent}0A`,
+            }}
           >
             <div className="px-4 py-3 space-y-1">
-              {navLinks.map((link) => (
-                <a
-                  key={link.href}
-                  href={link.href}
-                  onClick={() => setMobileOpen(false)}
-                  className="block px-3 py-2 text-sm text-muted hover:text-foreground transition-colors rounded-lg hover:bg-card"
-                >
-                  {link.label}
-                </a>
-              ))}
+              {navLinks.map((link) => {
+                const sectionId = link.href.replace("#", "");
+                const isActive = activeSection === sectionId;
+                return (
+                  <a
+                    key={link.href}
+                    href={link.href}
+                    onClick={() => setMobileOpen(false)}
+                    className="block px-3 py-2 text-sm rounded transition-colors"
+                    style={{
+                      color: isActive ? accent : undefined,
+                    }}
+                  >
+                    <span
+                      className={
+                        isActive
+                          ? "font-medium"
+                          : "text-muted hover:text-foreground"
+                      }
+                    >
+                      {link.label}
+                    </span>
+                  </a>
+                );
+              })}
+              <a
+                href="/portfolio/resume.pdf"
+                download
+                className="flex items-center gap-1.5 px-3 py-2 text-sm font-mono transition-colors"
+                style={{ color: accent }}
+              >
+                <Download size={14} />
+                Resume
+              </a>
             </div>
           </motion.div>
         )}
       </AnimatePresence>
-    </nav>
+    </motion.nav>
   );
 }

@@ -2,159 +2,151 @@
 
 import { useRef } from "react";
 import { motion, useInView } from "framer-motion";
-import { GraduationCap, MapPin, Briefcase, BookOpen } from "lucide-react";
-import { education, stats } from "@/lib/data";
+import { education } from "@/lib/data";
+
+const fadeIn = {
+  hidden: { opacity: 0, y: 12 },
+  visible: (i: number) => ({
+    opacity: 1,
+    y: 0,
+    transition: { delay: i * 0.08, duration: 0.5, ease: "easeOut" as const },
+  }),
+};
 
 export default function About() {
   const ref = useRef(null);
-  const inView = useInView(ref, { once: true, margin: "-100px" });
+  const inView = useInView(ref, { once: true, margin: "-80px" });
 
   return (
     <section id="about" className="py-24 relative" ref={ref}>
       <div className="mx-auto max-w-6xl px-4 sm:px-6">
-        {/* Section heading */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={inView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.6 }}
-          className="mb-16"
+        {/* Section header */}
+        <motion.h2
+          custom={0}
+          initial="hidden"
+          animate={inView ? "visible" : "hidden"}
+          variants={fadeIn}
+          className="font-mono text-sm mb-12"
         >
-          <h2 className="text-3xl sm:text-4xl font-bold font-heading mb-4">
-            About <span className="gradient-text">Me</span>
-          </h2>
-          <div className="w-16 h-1 bg-gradient-to-r from-emerald to-mint rounded-full" />
-        </motion.div>
+          <span style={{ color: "#0891B2" }}>model_card</span>
+          <span className="text-muted">.json</span>
+        </motion.h2>
 
-        {/* Bento grid */}
+        {/* Bento grid - no borders, tonal bg shifts */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-          {/* Bio card - spans 2 cols */}
+          {/* Bio - spans 2 cols */}
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={inView ? { opacity: 1, y: 0 } : {}}
-            transition={{ delay: 0.1, duration: 0.6 }}
-            className="lg:col-span-2 glass rounded-2xl p-6"
+            custom={1}
+            initial="hidden"
+            animate={inView ? "visible" : "hidden"}
+            variants={fadeIn}
+            className="lg:col-span-2 rounded-xl p-6"
+            style={{ backgroundColor: "rgba(8, 145, 178, 0.04)" }}
           >
-            <div className="flex items-start gap-4">
-              <div className="p-3 rounded-xl bg-emerald-dim">
-                <Briefcase size={20} className="text-emerald" />
-              </div>
-              <div>
-                <h3 className="text-lg font-semibold font-heading mb-2">
-                  Who I Am
-                </h3>
-                <p className="text-muted leading-relaxed">
-                  I&apos;m a Graduate AI Researcher at Arizona State University&apos;s CoRAL Lab,
-                  where I lead end-to-end development of research systems across agentic AI,
-                  LLM evaluation, AI safety, and privacy-preserving ML. With 3+ years of
-                  industry experience building production systems and a passion for pushing
-                  the boundaries of what AI can do, I bridge the gap between research and
-                  real-world impact.
-                </p>
-              </div>
-            </div>
+            <p className="text-muted leading-relaxed">
+              Graduate AI Researcher at Arizona State University&apos;s CoRAL Lab,
+              leading end-to-end development of research systems across agentic AI,
+              LLM evaluation, AI safety, and privacy-preserving ML. With 3+ years
+              of industry experience building production systems, I bridge the gap
+              between research and real-world impact.
+            </p>
           </motion.div>
 
-          {/* Location card */}
+          {/* Location + Status */}
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={inView ? { opacity: 1, y: 0 } : {}}
-            transition={{ delay: 0.2, duration: 0.6 }}
-            className="glass rounded-2xl p-6"
+            custom={2}
+            initial="hidden"
+            animate={inView ? "visible" : "hidden"}
+            variants={fadeIn}
+            className="rounded-xl p-6"
+            style={{ backgroundColor: "rgba(8, 145, 178, 0.04)" }}
           >
-            <div className="flex items-start gap-4">
-              <div className="p-3 rounded-xl bg-emerald-dim">
-                <MapPin size={20} className="text-emerald" />
-              </div>
-              <div>
-                <h3 className="text-lg font-semibold font-heading mb-1">
-                  Based In
-                </h3>
-                <p className="text-muted">Tempe, Arizona</p>
-                <p className="text-sm text-muted/70 mt-1">
-                  Open to relocate
-                </p>
-              </div>
-            </div>
+            <p className="font-mono text-xs text-muted mb-3">location</p>
+            <p className="text-foreground text-sm mb-4">Tempe, Arizona</p>
+            <p className="font-mono text-xs text-muted mb-3">status</p>
+            <p className="text-sm" style={{ color: "#10B981" }}>
+              Open to opportunities
+            </p>
           </motion.div>
 
-          {/* Education cards */}
+          {/* Education */}
           {education.map((edu, i) => (
             <motion.div
               key={edu.school}
-              initial={{ opacity: 0, y: 20 }}
-              animate={inView ? { opacity: 1, y: 0 } : {}}
-              transition={{ delay: 0.3 + i * 0.1, duration: 0.6 }}
-              className="glass rounded-2xl p-6"
+              custom={3 + i}
+              initial="hidden"
+              animate={inView ? "visible" : "hidden"}
+              variants={fadeIn}
+              className="rounded-xl p-6"
+              style={{ backgroundColor: "rgba(8, 145, 178, 0.04)" }}
             >
-              <div className="flex items-start gap-4">
-                <div className="p-3 rounded-xl bg-emerald-dim">
-                  <GraduationCap size={20} className="text-emerald" />
-                </div>
-                <div>
-                  <h3 className="text-sm font-semibold font-heading">
-                    {edu.degree}
-                  </h3>
-                  <p className="text-muted text-sm">{edu.school}</p>
-                  <p className="text-xs text-muted/70 mt-1">{edu.period}</p>
-                </div>
-              </div>
+              <p className="font-mono text-xs text-muted mb-3">education[{i}]</p>
+              <p className="text-sm font-heading font-medium text-foreground">
+                {edu.degree}
+              </p>
+              <p className="text-sm text-muted">{edu.school}</p>
+              <p className="text-xs text-muted mt-1">{edu.period}</p>
             </motion.div>
           ))}
 
-          {/* Research interests card */}
+          {/* Research interests */}
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={inView ? { opacity: 1, y: 0 } : {}}
-            transition={{ delay: 0.5, duration: 0.6 }}
-            className="glass rounded-2xl p-6"
+            custom={5}
+            initial="hidden"
+            animate={inView ? "visible" : "hidden"}
+            variants={fadeIn}
+            className="rounded-xl p-6"
+            style={{ backgroundColor: "rgba(8, 145, 178, 0.04)" }}
           >
-            <div className="flex items-start gap-4">
-              <div className="p-3 rounded-xl bg-emerald-dim">
-                <BookOpen size={20} className="text-emerald" />
+            <p className="font-mono text-xs text-muted mb-3">research_focus</p>
+            <div className="flex flex-wrap gap-2">
+              {["Agentic AI", "LLM Evaluation", "AI Safety", "Privacy-Preserving ML"].map(
+                (interest) => (
+                  <span
+                    key={interest}
+                    className="px-2.5 py-1 text-xs rounded-full border font-mono"
+                    style={{
+                      borderColor: "rgba(8, 145, 178, 0.2)",
+                      color: "#0891B2",
+                    }}
+                  >
+                    {interest}
+                  </span>
+                )
+              )}
+            </div>
+          </motion.div>
+
+          {/* Stats as key:value pairs in monospace */}
+          <motion.div
+            custom={6}
+            initial="hidden"
+            animate={inView ? "visible" : "hidden"}
+            variants={fadeIn}
+            className="lg:col-span-3 rounded-xl p-6"
+            style={{ backgroundColor: "rgba(8, 145, 178, 0.04)" }}
+          >
+            <p className="font-mono text-xs text-muted mb-4">metrics</p>
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 font-mono text-sm">
+              <div>
+                <span className="text-muted">publications: </span>
+                <span style={{ color: "#0891B2" }}>4</span>
               </div>
               <div>
-                <h3 className="text-lg font-semibold font-heading mb-2">
-                  Research Interests
-                </h3>
-                <div className="flex flex-wrap gap-2">
-                  {[
-                    "Agentic AI",
-                    "LLM Evaluation",
-                    "AI Safety",
-                    "Privacy-Preserving ML",
-                  ].map((interest) => (
-                    <span
-                      key={interest}
-                      className="px-3 py-1 text-xs rounded-full bg-emerald-dim text-emerald"
-                    >
-                      {interest}
-                    </span>
-                  ))}
-                </div>
+                <span className="text-muted">hackathon_wins: </span>
+                <span style={{ color: "#0891B2" }}>2</span>
+              </div>
+              <div>
+                <span className="text-muted">years_exp: </span>
+                <span style={{ color: "#0891B2" }}>&quot;3+&quot;</span>
+              </div>
+              <div>
+                <span className="text-muted">research_areas: </span>
+                <span style={{ color: "#0891B2" }}>4</span>
               </div>
             </div>
           </motion.div>
         </div>
-
-        {/* Stats row */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={inView ? { opacity: 1, y: 0 } : {}}
-          transition={{ delay: 0.6, duration: 0.6 }}
-          className="mt-8 grid grid-cols-2 sm:grid-cols-4 gap-4"
-        >
-          {stats.map((stat) => (
-            <div
-              key={stat.label}
-              className="glass rounded-2xl p-5 text-center"
-            >
-              <p className="text-2xl sm:text-3xl font-bold gradient-text font-heading">
-                {stat.value}
-              </p>
-              <p className="text-sm text-muted mt-1">{stat.label}</p>
-            </div>
-          ))}
-        </motion.div>
       </div>
     </section>
   );
