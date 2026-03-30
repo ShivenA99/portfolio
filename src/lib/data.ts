@@ -8,6 +8,7 @@ export const navItems = [
   { name: "Projects", link: "#projects" },
   { name: "Experience", link: "#experience" },
   { name: "Contact", link: "#contact" },
+  { name: "Resume", link: "/resume.pdf" },
 ];
 
 export const gridItems = [
@@ -78,7 +79,7 @@ export const projects = [
     id: 1,
     title: "GamED.AI",
     tag: "Ed-Tech",
-    des: "Multi-agent system on LangGraph generating educational games from exam questions. 1st Place HackASU 2025.",
+    des: "Multi-agent system on LangGraph generating educational games from exam questions. 1st Place HackASU 2026.",
     accent: "#10B981",
     iconLists: ["LG", "FA", "NX", "GC"],
     link: "https://shivena99.github.io/GamED-AI/acl-demo/",

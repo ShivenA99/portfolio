@@ -1,6 +1,6 @@
 "use client";
 
-import { FaLocationArrow } from "react-icons/fa6";
+import { FaLocationArrow, FaDownload } from "react-icons/fa6";
 
 import MagicButton from "./MagicButton";
 import { Spotlight } from "./ui/Spotlight";
@@ -46,13 +46,22 @@ const Hero = () => {
             Graduate AI Researcher at Arizona State University
           </p>
 
-          <a href="#about">
-            <MagicButton
-              title="See my work"
-              icon={<FaLocationArrow />}
-              position="right"
-            />
-          </a>
+          <div className="flex items-center gap-4">
+            <a href="#about">
+              <MagicButton
+                title="See my work"
+                icon={<FaLocationArrow />}
+                position="right"
+              />
+            </a>
+            <a href="/resume.pdf" target="_blank" rel="noopener noreferrer">
+              <MagicButton
+                title="Resume"
+                icon={<FaDownload />}
+                position="right"
+              />
+            </a>
+          </div>
         </div>
       </div>
     </div>
