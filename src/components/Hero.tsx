@@ -1,6 +1,8 @@
 "use client";
 
 import { FaLocationArrow, FaDownload } from "react-icons/fa6";
+import { FaGithub, FaLinkedin } from "react-icons/fa";
+import { IconMail } from "@tabler/icons-react";
 
 import MagicButton from "./MagicButton";
 import { Spotlight } from "./ui/Spotlight";
@@ -38,7 +40,7 @@ const Hero = () => {
           </p>
 
           <TextGenerateEffect
-            words="I build intelligent systems that learn reason and protect"
+            words="I build intelligent systems that learn, reason, and protect"
             className="text-center text-[40px] md:text-5xl lg:text-6xl"
           />
 
@@ -60,6 +62,31 @@ const Hero = () => {
                 icon={<FaDownload />}
                 position="right"
               />
+            </a>
+          </div>
+
+          <div className="flex gap-4 mt-6">
+            <a
+              href="https://github.com/shivena99"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-white/60 hover:text-emerald-400 transition-colors"
+            >
+              <FaGithub className="w-5 h-5" />
+            </a>
+            <a
+              href="https://www.linkedin.com/in/shiven-agarwal/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-white/60 hover:text-emerald-400 transition-colors"
+            >
+              <FaLinkedin className="w-5 h-5" />
+            </a>
+            <a
+              href="mailto:sagar147@asu.edu"
+              className="text-white/60 hover:text-emerald-400 transition-colors"
+            >
+              <IconMail className="w-5 h-5" />
             </a>
           </div>
         </div>

@@ -44,7 +44,7 @@ export const gridItems = [
   },
   {
     id: 4,
-    title: "AI researcher with a passion for building intelligent systems.",
+    title: "MS CS at ASU. 3+ years industry experience at Siemens Healthineers and CitiusTech. Published at EACL 2026, 3 papers under review at ACL.",
     description: "",
     className: "lg:col-span-2 md:col-span-3 md:row-span-1",
     imgClassName: "",
@@ -54,7 +54,7 @@ export const gridItems = [
   },
   {
     id: 5,
-    title: "Currently building multi-agent evaluation frameworks",
+    title: "Published at EACL 2026. Building GamED.AI, IntegrityShield, SentinelEdge, and DeALOG.",
     description: "The Inside Scoop",
     className: "md:col-span-3 md:row-span-2",
     imgClassName: "absolute right-0 bottom-0 md:w-96 w-60",
@@ -121,14 +121,14 @@ export const workExperience = [
   {
     id: 1,
     title: "Graduate AI Researcher",
-    desc: "Published at EACL 2026, 3 papers under review at ACL 2026. Building multi-agent systems, LLM evaluation, and AI safety tools at CoRAL Lab.",
+    desc: "Aug 2024 - Present. Published at EACL 2026, 3 papers under review at ACL 2026. Building multi-agent systems, LLM evaluation, and AI safety tools at CoRAL Lab.",
     className: "md:col-span-2",
     thumbnail: "AI",
   },
   {
     id: 2,
     title: "Associate Software Engineer",
-    desc: "Migrated 15+ modules for Siemens Healthineers, built OCR triaging platform for CitiusTech, and created mental health chatbot with AWS.",
+    desc: "Jul 2021 - Jul 2024. Migrated 15+ modules for Siemens Healthineers, built OCR triaging platform for CitiusTech, and created mental health chatbot with AWS.",
     className: "md:col-span-2",
     thumbnail: "SE",
   },
@@ -188,7 +188,7 @@ export const publications = [
     link: "https://arxiv.org/abs/2602.00996",
   },
   {
-    title: "Multi-Agent Robustness Evaluation",
+    title: "Multi-Agent Robustness and Safety Evaluation",
     venue: "ACL 2026",
     status: "Under Review" as const,
   },
