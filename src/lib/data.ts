@@ -1,8 +1,152 @@
 // ──────────────────────────────────────────────
 // Portfolio Data — Single Source of Truth
+// Matches JSM data structure for component compatibility
 // ──────────────────────────────────────────────
 
-// ── Types ────────────────────────────────────
+export const navItems = [
+  { name: "About", link: "#about" },
+  { name: "Projects", link: "#projects" },
+  { name: "Experience", link: "#experience" },
+  { name: "Contact", link: "#contact" },
+];
+
+export const gridItems = [
+  {
+    id: 1,
+    title: "I research multi-agent AI systems and LLM robustness at ASU's CoRAL Lab",
+    description: "",
+    className: "lg:col-span-3 md:col-span-6 md:row-span-4 lg:min-h-[60vh]",
+    imgClassName: "w-full h-full",
+    titleClassName: "justify-end",
+    img: "",
+    spareImg: "",
+  },
+  {
+    id: 2,
+    title: "Collaborating globally on AI safety research",
+    description: "",
+    className: "lg:col-span-2 md:col-span-3 md:row-span-2",
+    imgClassName: "",
+    titleClassName: "justify-start",
+    img: "",
+    spareImg: "",
+  },
+  {
+    id: 3,
+    title: "My tech stack",
+    description: "I constantly push boundaries",
+    className: "lg:col-span-2 md:col-span-3 md:row-span-2",
+    imgClassName: "",
+    titleClassName: "justify-center",
+    img: "",
+    spareImg: "",
+  },
+  {
+    id: 4,
+    title: "AI researcher with a passion for building intelligent systems.",
+    description: "",
+    className: "lg:col-span-2 md:col-span-3 md:row-span-1",
+    imgClassName: "",
+    titleClassName: "justify-start",
+    img: "",
+    spareImg: "",
+  },
+  {
+    id: 5,
+    title: "Currently building multi-agent evaluation frameworks",
+    description: "The Inside Scoop",
+    className: "md:col-span-3 md:row-span-2",
+    imgClassName: "absolute right-0 bottom-0 md:w-96 w-60",
+    titleClassName: "justify-center md:justify-start lg:justify-center",
+    img: "",
+    spareImg: "",
+  },
+  {
+    id: 6,
+    title: "Want to collaborate on research or projects?",
+    description: "",
+    className: "lg:col-span-2 md:col-span-3 md:row-span-1",
+    imgClassName: "",
+    titleClassName: "justify-center md:max-w-full max-w-60 text-center",
+    img: "",
+    spareImg: "",
+  },
+];
+
+export const projects = [
+  {
+    id: 1,
+    title: "GamED.AI",
+    tag: "Ed-Tech",
+    des: "Multi-agent system on LangGraph generating educational games from exam questions. 1st Place HackASU 2025.",
+    accent: "#10B981",
+    iconLists: ["LG", "FA", "NX", "GC"],
+    link: "https://shivena99.github.io/GamED-AI/acl-demo/",
+    linkLabel: "Live Demo",
+  },
+  {
+    id: 2,
+    title: "IntegrityShield",
+    tag: "AI Safety",
+    des: "Invisible watermarking protecting exam PDFs from AI solving, achieving 91-94% blocking rate. EACL 2026.",
+    accent: "#3B82F6",
+    iconLists: ["FL", "Re", "Py"],
+    link: "https://github.com/shivena99/IntegrityShield",
+    linkLabel: "GitHub",
+  },
+  {
+    id: 3,
+    title: "SentinelEdge",
+    tag: "On-Device ML",
+    des: "On-device scam call detection with federated learning and differential privacy. 1st Place HackASU 2026.",
+    accent: "#F59E0B",
+    iconLists: ["Wh", "XG", "FA", "Re"],
+    link: "https://github.com/shivena99/SentinelEdge",
+    linkLabel: "GitHub",
+  },
+  {
+    id: 4,
+    title: "DeALOG",
+    tag: "Multi-Agent QA",
+    des: "Decentralized multi-agent framework for multimodal question answering. ACL 2026 Under Review.",
+    accent: "#A855F7",
+    iconLists: ["Py", "MA", "LM"],
+    link: "https://arxiv.org/abs/2602.00996",
+    linkLabel: "Paper",
+  },
+];
+
+export const workExperience = [
+  {
+    id: 1,
+    title: "Graduate AI Researcher",
+    desc: "Published at EACL 2026, 3 papers under review at ACL 2026. Building multi-agent systems, LLM evaluation, and AI safety tools at CoRAL Lab.",
+    className: "md:col-span-2",
+    thumbnail: "AI",
+  },
+  {
+    id: 2,
+    title: "Associate Software Engineer",
+    desc: "Migrated 15+ modules for Siemens Healthineers, built OCR triaging platform for CitiusTech, and created mental health chatbot with AWS.",
+    className: "md:col-span-2",
+    thumbnail: "SE",
+  },
+];
+
+export const socialMedia = [
+  {
+    id: 1,
+    name: "GitHub",
+    link: "https://github.com/shivena99",
+  },
+  {
+    id: 2,
+    name: "LinkedIn",
+    link: "https://www.linkedin.com/in/shiven-agarwal/",
+  },
+];
+
+// ── Legacy exports for backward compatibility ──
 
 export interface PersonalInfo {
   name: string;
@@ -14,57 +158,6 @@ export interface PersonalInfo {
   location: string;
 }
 
-export interface Section {
-  id: string;
-  label: string;
-  accent: string;
-  bgTint: string;
-}
-
-export interface NavLink {
-  label: string;
-  href: string;
-}
-
-export interface Education {
-  degree: string;
-  school: string;
-  period: string;
-}
-
-export interface ExperienceItem {
-  title: string;
-  company: string;
-  location: string;
-  period: string;
-  bullets: string[];
-}
-
-export interface Project {
-  title: string;
-  tag: string;
-  tagDetail: string;
-  accent: string;
-  description: string;
-  tech: string[];
-  link?: string;
-  linkLabel?: string;
-}
-
-export interface Publication {
-  title: string;
-  venue: string;
-  status: "Accepted" | "Under Review";
-  link?: string;
-}
-
-export interface SkillCategory {
-  category: string;
-  items: string[];
-}
-
-// ── Data ─────────────────────────────────────
-
 export const personalInfo: PersonalInfo = {
   name: "Shiven Agarwal",
   title: "Graduate AI Researcher",
@@ -75,151 +168,39 @@ export const personalInfo: PersonalInfo = {
   location: "Tempe, AZ",
 };
 
-export const sections: Section[] = [
-  { id: "hero", label: "Home", accent: "#10B981", bgTint: "#030712" },
-  { id: "about", label: "About", accent: "#0891B2", bgTint: "#061219" },
-  { id: "experience", label: "Experience", accent: "#F59E0B", bgTint: "#0F0D06" },
-  { id: "projects", label: "Projects", accent: "#A855F7", bgTint: "#0D0619" },
-  { id: "publications", label: "Publications", accent: "#FF6B6B", bgTint: "#140A0A" },
-  { id: "skills", label: "Skills", accent: "#E5E7EB", bgTint: "#0A0A0A" },
-  { id: "contact", label: "Contact", accent: "#10B981", bgTint: "#030712" },
-];
-
-export const navLinks: NavLink[] = [
-  { label: "About", href: "#about" },
-  { label: "Experience", href: "#experience" },
-  { label: "Projects", href: "#projects" },
-  { label: "Publications", href: "#publications" },
-  { label: "Skills", href: "#skills" },
-  { label: "Contact", href: "#contact" },
-];
-
-export const education: Education[] = [
-  {
-    degree: "MS Computer Science",
-    school: "Arizona State University",
-    period: "Aug 2024 - May 2026",
-  },
-  {
-    degree: "BE Electronics & Communication",
-    school: "BITS Pilani Hyderabad",
-    period: "Aug 2017 - Jul 2021",
-  },
-];
-
-export const experience: ExperienceItem[] = [
-  {
-    title: "Graduate AI Researcher",
-    company: "CoRAL Lab, Arizona State University",
-    location: "Tempe, AZ",
-    period: "Aug 2024 - Present",
-    bullets: [
-      "Published at EACL 2026 with 3 papers under review at ACL 2026",
-      "Leading end-to-end development of research systems across agentic AI, LLM evaluation, AI safety, and privacy-preserving ML",
-    ],
-  },
-  {
-    title: "Associate Software Engineer",
-    company: "AasPaas Online Services",
-    location: "Hyderabad, India",
-    period: "Jul 2021 - Jul 2024",
-    bullets: [
-      "Migrated 15+ modules on Siemens Healthineers' oncology patient portal from .NET to Angular and Node.js",
-      "Developed patient form triaging platform for CitiusTech with Tesseract OCR",
-      "Built mental health chatbot in React Native with AWS Lex and Lambda",
-    ],
-  },
-];
-
-export const projects: Project[] = [
-  {
-    title: "GamED.AI",
-    tag: "Ed-Tech",
-    tagDetail: "1st Place HackASU 2025 | ACL 2026 Under Review",
-    accent: "#10B981",
-    description:
-      "Multi-agent system on LangGraph generating educational games from exam questions.",
-    tech: ["LangGraph", "FastAPI", "Next.js", "GCP Cloud Run", "SAM3", "VLM"],
-    link: "https://shivena99.github.io/GamED-AI/acl-demo/",
-    linkLabel: "Live Demo",
-  },
-  {
-    title: "IntegrityShield",
-    tag: "AI Safety",
-    tagDetail: "EACL 2026 Demo Accepted",
-    accent: "#3B82F6",
-    description:
-      "Invisible watermarking protecting exam PDFs from AI solving, achieving 91-94% blocking rate.",
-    tech: ["Flask", "React", "PyMuPDF", "Python"],
-    link: "https://github.com/shivena99/IntegrityShield",
-    linkLabel: "GitHub",
-  },
-  {
-    title: "SentinelEdge",
-    tag: "On-Device ML",
-    tagDetail: "1st Place HackASU 2026",
-    accent: "#F59E0B",
-    description:
-      "On-device scam call detection with federated learning and differential privacy.",
-    tech: ["Whisper", "XGBoost", "FastAPI", "React"],
-    link: "https://github.com/shivena99/SentinelEdge",
-    linkLabel: "GitHub",
-  },
-  {
-    title: "DeALOG",
-    tag: "Multi-Agent QA",
-    tagDetail: "ACL 2026 Under Review",
-    accent: "#A855F7",
-    description:
-      "Decentralized multi-agent framework for multimodal question answering.",
-    tech: ["Python", "Multi-Agent", "LLMs"],
-    link: "https://arxiv.org/abs/2602.00996",
-    linkLabel: "Paper",
-  },
-];
-
-export const publications: Publication[] = [
+export const publications = [
   {
     title: "IntegrityShield: Safeguarding Exam Integrity Against LLMs",
     venue: "EACL 2026 Demo",
-    status: "Accepted",
+    status: "Accepted" as const,
     link: "https://arxiv.org/abs/2601.11093",
   },
   {
     title: "GamED.AI: Multi-Agent Educational Game Generation",
     venue: "ACL 2026",
-    status: "Under Review",
+    status: "Under Review" as const,
   },
   {
     title: "DeALOG: Decentralized Multi-Agent Multimodal QA",
     venue: "ACL 2026",
-    status: "Under Review",
+    status: "Under Review" as const,
     link: "https://arxiv.org/abs/2602.00996",
   },
   {
     title: "Multi-Agent Robustness Evaluation",
     venue: "ACL 2026",
-    status: "Under Review",
+    status: "Under Review" as const,
   },
 ];
 
-export const skills: SkillCategory[] = [
+export const skills = [
   {
     category: "Languages",
     items: ["Python", "C++", "JavaScript", "TypeScript", "SQL"],
   },
   {
     category: "Development",
-    items: [
-      "FastAPI",
-      "Flask",
-      "React",
-      "Next.js",
-      "Node.js",
-      "PostgreSQL",
-      "Docker",
-      "Git",
-    ],
+    items: ["FastAPI", "Flask", "React", "Next.js", "Node.js", "PostgreSQL", "Docker", "Git"],
   },
   {
     category: "Cloud",
@@ -227,20 +208,6 @@ export const skills: SkillCategory[] = [
   },
   {
     category: "ML / AI",
-    items: [
-      "PyTorch",
-      "Scikit-Learn",
-      "Transformers",
-      "LangGraph",
-      "XGBoost",
-      "Federated Learning",
-    ],
+    items: ["PyTorch", "Scikit-Learn", "Transformers", "LangGraph", "XGBoost", "Federated Learning"],
   },
-];
-
-export const stats = [
-  { label: "Publications", value: "4" },
-  { label: "Hackathon Wins", value: "2" },
-  { label: "Years Experience", value: "3+" },
-  { label: "Research Areas", value: "4" },
 ];

@@ -1,23 +1,10 @@
 import type { Metadata } from "next";
-import { Space_Grotesk, Inter, JetBrains_Mono } from "next/font/google";
+import { Inter } from "next/font/google";
 import ThemeProvider from "@/components/providers/ThemeProvider";
 import "./globals.css";
 
-const spaceGrotesk = Space_Grotesk({
-  subsets: ["latin"],
-  variable: "--font-heading",
-  display: "swap",
-});
-
 const inter = Inter({
   subsets: ["latin"],
-  variable: "--font-body",
-  display: "swap",
-});
-
-const jetbrainsMono = JetBrains_Mono({
-  subsets: ["latin"],
-  variable: "--font-mono",
   display: "swap",
 });
 
@@ -50,12 +37,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html
-      lang="en"
-      className={`${spaceGrotesk.variable} ${inter.variable} ${jetbrainsMono.variable}`}
-      suppressHydrationWarning
-    >
-      <body className="min-h-screen font-body antialiased">
+    <html lang="en" suppressHydrationWarning>
+      <body className={inter.className}>
         <ThemeProvider>{children}</ThemeProvider>
       </body>
     </html>

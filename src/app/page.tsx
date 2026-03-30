@@ -1,42 +1,27 @@
 "use client";
 
-import SmoothScroll from "@/components/providers/SmoothScroll";
-import Navbar from "@/components/layout/Navbar";
-import Footer from "@/components/layout/Footer";
-import Hero from "@/components/sections/Hero";
-import About from "@/components/sections/About";
-import Experience from "@/components/sections/Experience";
-import Projects from "@/components/sections/Projects";
-import Publications from "@/components/sections/Publications";
-import Skills from "@/components/sections/Skills";
-import Contact from "@/components/sections/Contact";
-import { sections } from "@/lib/data";
+import { navItems } from "@/lib/data";
 
-const sectionComponents = [
-  { Component: Hero, index: 0 },
-  { Component: About, index: 1 },
-  { Component: Experience, index: 2 },
-  { Component: Projects, index: 3 },
-  { Component: Publications, index: 4 },
-  { Component: Skills, index: 5 },
-  { Component: Contact, index: 6 },
-];
+import Hero from "@/components/Hero";
+import Grid from "@/components/Grid";
+import Footer from "@/components/Footer";
+import Experience from "@/components/Experience";
+import RecentProjects from "@/components/RecentProjects";
+import { FloatingNav } from "@/components/ui/FloatingNavbar";
 
-export default function Home() {
+const Home = () => {
   return (
-    <SmoothScroll>
-      <Navbar />
-      <main>
-        {sectionComponents.map(({ Component, index }) => (
-          <div
-            key={sections[index].id}
-            style={{ backgroundColor: sections[index].bgTint }}
-          >
-            <Component />
-          </div>
-        ))}
-      </main>
-      <Footer />
-    </SmoothScroll>
+    <main className="relative bg-black-100 flex justify-center items-center flex-col overflow-hidden mx-auto sm:px-10 px-5">
+      <div className="max-w-7xl w-full">
+        <FloatingNav navItems={navItems} />
+        <Hero />
+        <Grid />
+        <RecentProjects />
+        <Experience />
+        <Footer />
+      </div>
+    </main>
   );
-}
+};
+
+export default Home;

@@ -9,12 +9,43 @@
   --color-section-accent: var(--section-accent, #10B981);
   --color-section-bg: var(--section-bg, #030712);
 
+  /* Emerald palette */
+  --color-emerald: #10B981;
+  --color-emerald-light: #34D399;
+  --color-emerald-lighter: #A7F3D0;
+  --color-emerald-dark: #065F46;
+
+  /* Black shades (matching JSM pattern) */
+  --color-black-100: #030712;
+  --color-black-200: rgba(13, 17, 23, 0.75);
+  --color-black-300: rgba(255, 255, 255, 0.125);
+
+  /* White shades */
+  --color-white-100: #BEC1DD;
+  --color-white-200: #C1C2D3;
+
+  --color-blue-100: #E4ECFF;
+
+  /* Fonts */
   --font-heading: "Space Grotesk", ui-sans-serif, system-ui, sans-serif;
   --font-body: "Inter", ui-sans-serif, system-ui, sans-serif;
   --font-mono: "JetBrains Mono", ui-monospace, monospace;
+
+  /* Border radius */
+  --radius: 0.5rem;
+
+  /* Animations */
+  --animate-spotlight: spotlight 2s ease 0.75s 1 forwards;
+  --animate-shimmer: shimmer 2s linear infinite;
+  --animate-first: moveVertical 30s ease infinite;
+  --animate-second: moveInCircle 20s reverse infinite;
+  --animate-third: moveInCircle 40s linear infinite;
+  --animate-fourth: moveHorizontal 40s ease infinite;
+  --animate-fifth: moveInCircle 20s ease infinite;
+  --animate-scroll: scroll var(--animation-duration, 40s) var(--animation-direction, forwards) linear infinite;
 }
 
-/* ── Dark mode default ─────────────────────── */
+/* ── CSS Variables ─────────────────────────── */
 
 :root {
   --bg: #030712;
@@ -30,100 +61,45 @@
   --muted: #6b7280;
 }
 
-/* ── Base ──────────────────────────────────── */
+/* ── Keyframes ─────────────────────────────── */
 
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
+@keyframes spotlight {
+  0% {
+    opacity: 0;
+    transform: translate(-72%, -62%) scale(0.5);
+  }
+  100% {
+    opacity: 1;
+    transform: translate(-50%, -40%) scale(1);
+  }
 }
 
-html {
-  scroll-behavior: smooth;
-  color-scheme: dark;
+@keyframes shimmer {
+  from { background-position: 0 0; }
+  to { background-position: -200% 0; }
 }
 
-.light html,
-html.light {
-  color-scheme: light;
+@keyframes moveHorizontal {
+  0% { transform: translateX(-50%) translateY(-10%); }
+  50% { transform: translateX(50%) translateY(10%); }
+  100% { transform: translateX(-50%) translateY(-10%); }
 }
 
-body {
-  background-color: var(--bg);
-  color: var(--fg);
-  font-family: var(--font-body);
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+@keyframes moveInCircle {
+  0% { transform: rotate(0deg); }
+  50% { transform: rotate(180deg); }
+  100% { transform: rotate(360deg); }
 }
 
-/* ── Selection ─────────────────────────────── */
-
-::selection {
-  background-color: rgba(16, 185, 129, 0.3);
-  color: #ffffff;
+@keyframes moveVertical {
+  0% { transform: translateY(-50%); }
+  50% { transform: translateY(50%); }
+  100% { transform: translateY(-50%); }
 }
 
-/* ── Scrollbar (section-accent colored) ────── */
-
-::-webkit-scrollbar {
-  width: 6px;
+@keyframes scroll {
+  to { transform: translate(calc(-50% - 0.5rem)); }
 }
-
-::-webkit-scrollbar-track {
-  background: var(--bg);
-}
-
-::-webkit-scrollbar-thumb {
-  background: color-mix(in srgb, var(--section-accent) 40%, transparent);
-  border-radius: 3px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background: color-mix(in srgb, var(--section-accent) 60%, transparent);
-}
-
-/* Firefox */
-* {
-  scrollbar-width: thin;
-  scrollbar-color: color-mix(in srgb, var(--section-accent) 40%, transparent) var(--bg);
-}
-
-/* ── Dot grid pattern ──────────────────────── */
-/* 4px dots, 40px spacing, 3% opacity          */
-
-.dot-grid {
-  background-image: radial-gradient(
-    circle,
-    rgba(255, 255, 255, 0.03) 2px,
-    transparent 2px
-  );
-  background-size: 40px 40px;
-}
-
-.light .dot-grid {
-  background-image: radial-gradient(
-    circle,
-    rgba(0, 0, 0, 0.03) 2px,
-    transparent 2px
-  );
-  background-size: 40px 40px;
-}
-
-/* ── Font utility classes ──────────────────── */
-
-.font-heading {
-  font-family: var(--font-heading);
-}
-
-.font-body {
-  font-family: var(--font-body);
-}
-
-.font-mono {
-  font-family: var(--font-mono);
-}
-
-/* ── Pulse animation for status dot ──────── */
 
 @keyframes pulse-dot {
   0%, 100% {
@@ -138,12 +114,6 @@ body {
   }
 }
 
-.animate-pulse-dot {
-  animation: pulse-dot 2s ease-in-out infinite;
-}
-
-/* ── Scroll indicator bounce ─────────────── */
-
 @keyframes bounce-subtle {
   0%, 100% {
     transform: translateY(0);
@@ -155,6 +125,122 @@ body {
   }
 }
 
+/* ── Base ──────────────────────────────────── */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  scroll-behavior: smooth;
+}
+
+html {
+  color-scheme: dark;
+}
+
+html.light {
+  color-scheme: light;
+}
+
+body {
+  background-color: var(--bg);
+  color: var(--fg);
+  font-family: var(--font-body);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+button {
+  outline: none;
+}
+
+button:active {
+  outline: none;
+}
+
+/* ── Utilities ─────────────────────────────── */
+
+.heading {
+  font-weight: 700;
+  font-size: 2.25rem;
+  line-height: 2.5rem;
+  text-align: center;
+}
+
+@media (min-width: 768px) {
+  .heading {
+    font-size: 3rem;
+    line-height: 1;
+  }
+}
+
+.text-emerald {
+  color: #10B981;
+}
+
+.text-emerald-light {
+  color: #34D399;
+}
+
+.animate-pulse-dot {
+  animation: pulse-dot 2s ease-in-out infinite;
+}
+
 .animate-bounce-subtle {
   animation: bounce-subtle 2s ease-in-out infinite;
+}
+
+/* ── Selection ─────────────────────────────── */
+
+::selection {
+  background-color: rgba(16, 185, 129, 0.3);
+  color: #ffffff;
+}
+
+/* ── Scrollbar ─────────────────────────────── */
+
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg);
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(16, 185, 129, 0.4);
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(16, 185, 129, 0.6);
+}
+
+* {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(16, 185, 129, 0.4) var(--bg);
+}
+
+/* ── Grid background utilities ─────────────── */
+
+.bg-grid-white {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32' width='100' height='100' fill='none' stroke='rgba(255,255,255,0.03)'%3E%3Cpath d='M0 .5H31.5V32'/%3E%3C/svg%3E");
+}
+
+.bg-grid-dark {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32' width='100' height='100' fill='none' stroke='rgba(3,7,18,0.2)'%3E%3Cpath d='M0 .5H31.5V32'/%3E%3C/svg%3E");
+}
+
+/* ── Font utility classes ──────────────────── */
+
+.font-heading {
+  font-family: var(--font-heading);
+}
+
+.font-body {
+  font-family: var(--font-body);
+}
+
+.font-mono {
+  font-family: var(--font-mono);
 }
