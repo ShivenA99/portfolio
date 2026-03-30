@@ -1,94 +1,110 @@
 "use client";
-import React, { useState } from "react";
-import {
-  motion,
-  AnimatePresence,
-  useScroll,
-  useMotionValueEvent,
-} from "framer-motion";
+
+import { useEffect, useRef, useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
-import { cn } from "@/lib/utils";
 import { useTheme } from "next-themes";
 import { IconSun, IconMoon } from "@tabler/icons-react";
+import { cn } from "@/lib/utils";
 
 export const FloatingNav = ({
   navItems,
   className,
 }: {
-  navItems: {
-    name: string;
-    link: string;
-    icon?: React.ReactNode;
-  }[];
+  navItems: { name: string; link: string }[];
   className?: string;
 }) => {
-  const { scrollYProgress } = useScroll();
   const [visible, setVisible] = useState(true);
-  const { theme, setTheme } = useTheme();
+  const lastY = useRef(0);
+  const { resolvedTheme, setTheme } = useTheme();
 
-  useMotionValueEvent(scrollYProgress, "change", (current) => {
-    if (typeof current === "number") {
-      const direction = current! - scrollYProgress.getPrevious()!;
-
-      if (scrollYProgress.get() < 0.05) {
+  useEffect(() => {
+    const handleScroll = () => {
+      const y = window.scrollY;
+      if (y < 60) {
         setVisible(true);
       } else {
-        if (direction < 0) {
-          setVisible(true);
-        } else {
-          setVisible(false);
-        }
+        setVisible(y < lastY.current);
       }
-    }
-  });
+      lastY.current = y;
+    };
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  const isDark = resolvedTheme === "dark";
 
   return (
-    <AnimatePresence mode="wait">
-      <motion.div
-        initial={{
-          opacity: 1,
-          y: -100,
-        }}
-        animate={{
-          y: visible ? 0 : -100,
-          opacity: visible ? 1 : 0,
-        }}
-        transition={{
-          duration: 0.2,
-        }}
+    <AnimatePresence>
+      <motion.nav
+        initial={{ y: -80, opacity: 0 }}
+        animate={{ y: visible ? 0 : -80, opacity: visible ? 1 : 0 }}
+        transition={{ duration: 0.22, ease: [0.25, 0.1, 0.25, 1] }}
         className={cn(
-          "flex max-w-fit md:min-w-[70vw] lg:min-w-fit fixed z-[5000] top-10 inset-x-0 mx-auto px-10 py-5 rounded-lg border border-black/.1 shadow-[0px_2px_3px_-1px_rgba(0,0,0,0.1),0px_1px_0px_0px_rgba(25,28,33,0.02),0px_0px_0px_1px_rgba(25,28,33,0.08)] items-center justify-center space-x-4",
+          "fixed top-0 left-0 right-0 z-[5000] flex items-center justify-between px-6 md:px-10 h-14",
           className
         )}
         style={{
-          backdropFilter: "blur(16px) saturate(180%)",
-          backgroundColor: "rgba(3, 7, 18, 0.75)",
-          borderRadius: "12px",
-          border: "1px solid rgba(255, 255, 255, 0.125)",
+          background: "color-mix(in srgb, var(--bg) 85%, transparent)",
+          backdropFilter: "blur(12px) saturate(160%)",
+          borderBottom: "1px solid var(--border)",
         }}
       >
-        <div className="flex items-center gap-6">
-          {navItems.map((navItem: { name: string; link: string; icon?: React.ReactNode }, idx: number) => (
+        {/* Wordmark */}
+        <Link
+          href="#home"
+          className="font-semibold text-sm tracking-tight transition-colors duration-200"
+          style={{
+            fontFamily: "var(--font-jakarta, var(--font-heading))",
+            color: "var(--fg)",
+          }}
+          onMouseEnter={(e) => ((e.currentTarget as HTMLAnchorElement).style.color = "var(--accent)")}
+          onMouseLeave={(e) => ((e.currentTarget as HTMLAnchorElement).style.color = "var(--fg)")}
+        >
+          Shiven Agarwal
+        </Link>
+
+        {/* Nav links */}
+        <div className="flex items-center gap-1">
+          {navItems.map((item) => (
             <Link
-              key={`link=${idx}`}
-              href={navItem.link}
-              className={cn(
-                "relative dark:text-neutral-50 items-center flex space-x-1 text-neutral-600 dark:hover:text-neutral-300 hover:text-neutral-500"
-              )}
+              key={item.name}
+              href={item.link}
+              className="px-3 py-1.5 text-sm rounded-md transition-colors duration-150"
+              style={{ color: "var(--muted)", fontFamily: "var(--font-body)" }}
+              onMouseEnter={(e) => {
+                (e.currentTarget as HTMLAnchorElement).style.color = "var(--fg)";
+                (e.currentTarget as HTMLAnchorElement).style.background = "var(--surface)";
+              }}
+              onMouseLeave={(e) => {
+                (e.currentTarget as HTMLAnchorElement).style.color = "var(--muted)";
+                (e.currentTarget as HTMLAnchorElement).style.background = "transparent";
+              }}
+              {...(item.link.endsWith(".pdf") ? { target: "_blank", rel: "noopener noreferrer" } : {})}
             >
-              <span className="block sm:hidden">{navItem.icon}</span>
-              <span className="text-sm !cursor-pointer">{navItem.name}</span>
+              {item.name}
             </Link>
           ))}
+
+          {/* Theme toggle */}
           <button
-            onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
-            className="relative p-2 rounded-lg dark:text-neutral-50 text-neutral-600 dark:hover:text-neutral-300 hover:text-neutral-500 transition-colors"
+            onClick={() => setTheme(isDark ? "light" : "dark")}
+            className="ml-2 p-1.5 rounded-md transition-colors duration-150"
+            style={{ color: "var(--muted)" }}
             aria-label="Toggle theme"
+            onMouseEnter={(e) => {
+              (e.currentTarget as HTMLButtonElement).style.color = "var(--fg)";
+              (e.currentTarget as HTMLButtonElement).style.background = "var(--surface)";
+            }}
+            onMouseLeave={(e) => {
+              (e.currentTarget as HTMLButtonElement).style.color = "var(--muted)";
+              (e.currentTarget as HTMLButtonElement).style.background = "transparent";
+            }}
           >
-            {theme === "dark" ? <IconSun size={18} /> : <IconMoon size={18} />}
+            {isDark ? <IconSun size={16} /> : <IconMoon size={16} />}
           </button>
         </div>
-      </motion.div>
+      </motion.nav>
     </AnimatePresence>
   );
 };

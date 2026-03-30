@@ -1,66 +1,111 @@
 "use client";
 
-import { FaLocationArrow } from "react-icons/fa6";
-import { FaGithub, FaLinkedin } from "react-icons/fa";
+import { motion, useInView } from "framer-motion";
+import { useRef } from "react";
+import { personalInfo } from "@/lib/data";
 
-import MagicButton from "./MagicButton";
+export default function Footer() {
+  const ref = useRef(null);
+  const inView = useInView(ref, { once: true, margin: "-60px" });
 
-const socialMedia = [
-  {
-    id: 1,
-    name: "GitHub",
-    icon: <FaGithub size={20} />,
-    link: "https://github.com/shivena99",
-  },
-  {
-    id: 2,
-    name: "LinkedIn",
-    icon: <FaLinkedin size={20} />,
-    link: "https://www.linkedin.com/in/shiven-agarwal/",
-  },
-];
-
-const Footer = () => {
   return (
-    <footer className="w-full pt-20 pb-10" id="contact">
-      <div className="flex flex-col items-center">
-        <h1 className="heading lg:max-w-[45vw]">
-          Ready to <span className="text-emerald">collaborate</span> on
-          research or engineering?
-        </h1>
-        <p className="text-white-200 md:mt-10 my-5 text-center">
-          Reach out to me today and let&apos;s discuss how we can work
-          together on AI research and intelligent systems.
-        </p>
-        <a href="mailto:sagar147@asu.edu">
-          <MagicButton
-            title="Let's get in touch"
-            icon={<FaLocationArrow />}
-            position="right"
-          />
-        </a>
-      </div>
-      <div className="flex mt-16 md:flex-row flex-col justify-between items-center">
-        <p className="md:text-base text-sm md:font-normal font-light">
-          Copyright &copy; 2026 Shiven Agarwal
-        </p>
+    <footer
+      id="contact"
+      className="py-24 px-6 md:px-10 lg:px-20"
+      style={{ borderTop: "1px solid var(--border)" }}
+    >
+      <div className="max-w-5xl mx-auto">
+        <span className="section-label">Contact</span>
 
-        <div className="flex items-center md:gap-3 gap-6">
-          {socialMedia.map((info) => (
+        <motion.div
+          ref={ref}
+          initial={{ opacity: 0, y: 20 }}
+          animate={inView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.55, ease: [0.25, 0.1, 0.25, 1] }}
+          className="mt-6 flex flex-col gap-8"
+        >
+          <h2
+            className="heading-xl"
+            style={{
+              fontFamily: "var(--font-jakarta, var(--font-heading))",
+              maxWidth: 480,
+            }}
+          >
+            Let&apos;s build something together.
+          </h2>
+
+          <div className="flex flex-col gap-2">
+            <span style={{ fontSize: "0.72rem", fontFamily: "var(--font-mono)", color: "var(--muted)", letterSpacing: "0.08em", textTransform: "uppercase" }}>
+              Email
+            </span>
             <a
-              key={info.id}
-              href={info.link}
+              href={`mailto:${personalInfo.email}`}
+              className="underline-reveal w-fit"
+              style={{
+                fontFamily: "var(--font-jakarta, var(--font-heading))",
+                fontWeight: 700,
+                fontSize: "clamp(1.2rem, 3vw, 1.8rem)",
+                color: "var(--fg)",
+                letterSpacing: "-0.01em",
+                textDecoration: "none",
+                transition: "color 0.2s ease",
+              }}
+              onMouseEnter={(e) => ((e.currentTarget as HTMLAnchorElement).style.color = "var(--accent)")}
+              onMouseLeave={(e) => ((e.currentTarget as HTMLAnchorElement).style.color = "var(--fg)")}
+            >
+              {personalInfo.email}
+            </a>
+          </div>
+
+          <div className="flex items-center gap-6">
+            <a
+              href={personalInfo.github}
               target="_blank"
               rel="noopener noreferrer"
-              className="w-10 h-10 cursor-pointer flex justify-center items-center backdrop-filter backdrop-blur-lg saturate-180 bg-opacity-75 bg-black-200 rounded-lg border border-black-300"
+              className="underline-reveal text-sm"
+              style={{ color: "var(--muted)", fontFamily: "var(--font-mono)", letterSpacing: "0.04em" }}
+              onMouseEnter={(e) => ((e.currentTarget as HTMLAnchorElement).style.color = "var(--fg)")}
+              onMouseLeave={(e) => ((e.currentTarget as HTMLAnchorElement).style.color = "var(--muted)")}
             >
-              {info.icon}
+              GitHub
             </a>
-          ))}
-        </div>
+            <a
+              href={personalInfo.linkedin}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="underline-reveal text-sm"
+              style={{ color: "var(--muted)", fontFamily: "var(--font-mono)", letterSpacing: "0.04em" }}
+              onMouseEnter={(e) => ((e.currentTarget as HTMLAnchorElement).style.color = "var(--fg)")}
+              onMouseLeave={(e) => ((e.currentTarget as HTMLAnchorElement).style.color = "var(--muted)")}
+            >
+              LinkedIn
+            </a>
+            <a
+              href={`/portfolio/resume.pdf`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="underline-reveal text-sm"
+              style={{ color: "var(--muted)", fontFamily: "var(--font-mono)", letterSpacing: "0.04em" }}
+              onMouseEnter={(e) => ((e.currentTarget as HTMLAnchorElement).style.color = "var(--fg)")}
+              onMouseLeave={(e) => ((e.currentTarget as HTMLAnchorElement).style.color = "var(--muted)")}
+            >
+              Resume
+            </a>
+          </div>
+
+          <div
+            className="flex items-center justify-between pt-8"
+            style={{ borderTop: "1px solid var(--border)" }}
+          >
+            <span style={{ fontSize: "0.78rem", fontFamily: "var(--font-mono)", color: "var(--muted)", letterSpacing: "0.04em" }}>
+              © 2026 Shiven Agarwal
+            </span>
+            <span style={{ fontSize: "0.78rem", fontFamily: "var(--font-mono)", color: "var(--muted)", letterSpacing: "0.04em" }}>
+              Tempe, AZ
+            </span>
+          </div>
+        </motion.div>
       </div>
     </footer>
   );
-};
-
-export default Footer;
+}

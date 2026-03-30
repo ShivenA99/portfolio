@@ -1,31 +1,37 @@
 "use client";
 
 import { navItems } from "@/lib/data";
-
-import Hero from "@/components/Hero";
-import Grid from "@/components/Grid";
-import Footer from "@/components/Footer";
-import Experience from "@/components/Experience";
-import RecentProjects from "@/components/RecentProjects";
-import Publications from "@/components/Publications";
-import Skills from "@/components/Skills";
 import { FloatingNav } from "@/components/ui/FloatingNavbar";
+import Hero from "@/components/Hero";
+import RecentProjects from "@/components/RecentProjects";
+import Research from "@/components/Research";
+import Background from "@/components/Background";
+import Footer from "@/components/Footer";
+import BackgroundGames from "@/components/BackgroundGames";
 
-const Home = () => {
+export default function Home() {
   return (
-    <main className="relative bg-black-100 flex justify-center items-center flex-col overflow-hidden mx-auto sm:px-10 px-5">
-      <div className="max-w-7xl w-full">
-        <FloatingNav navItems={navItems} />
-        <Hero />
-        <Grid />
-        <RecentProjects />
-        <Experience />
-        <Publications />
-        <Skills />
-        <Footer />
+    <main
+      style={{
+        background: "var(--bg)",
+        color: "var(--fg)",
+        minHeight: "100vh",
+      }}
+    >
+      <FloatingNav navItems={navItems} />
+      <Hero />
+
+      {/* All sections below hero share a relative stacking context.
+          BackgroundGames lives at z-0; content sits at z-10. */}
+      <div className="relative">
+        <BackgroundGames />
+        <div className="relative" style={{ zIndex: 10 }}>
+          <RecentProjects />
+          <Research />
+          <Background />
+          <Footer />
+        </div>
       </div>
     </main>
   );
-};
-
-export default Home;
+}
