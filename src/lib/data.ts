@@ -55,7 +55,7 @@ export const workExperience = [
     title: "Graduate AI Researcher",
     company: "CoRAL, Arizona State University",
     period: "Aug 2024 – Present",
-    desc: "Published at EACL 2026. 2 papers accepted and 1 under review at ACL 2026. Building multi-agent evaluation frameworks, LLM robustness tools, and AI safety systems. 1st place at HackASU 2025 and 2026.",
+    desc: "Published at EACL 2026. 3 papers accepted at ACL 2026. Building multi-agent evaluation frameworks, LLM robustness tools, and AI safety systems. 1st place at HackASU 2025 and 2026.",
   },
   {
     id: 2,
