@@ -89,19 +89,45 @@ export const publications = [
 export const skills = [
   {
     category: "Languages",
-    items: ["Python", "C++", "JavaScript", "TypeScript", "SQL"],
+    items: ["Python", "TypeScript", "C++", "SQL"],
   },
   {
-    category: "ML / AI",
-    items: ["PyTorch", "Transformers", "LangGraph", "Scikit-Learn", "XGBoost", "Federated Learning"],
+    category: "Agentic AI",
+    items: [
+      "LangGraph",
+      "LangChain",
+      "MCP",
+      "Multi-Agent Orchestration",
+      "RAG",
+      "Tool / Function Calling",
+      "ReAct",
+      "HITL",
+      "Guardrails",
+      "Evals",
+      "LangSmith",
+    ],
   },
   {
-    category: "Development",
-    items: ["FastAPI", "Flask", "React", "Next.js", "Node.js", "PostgreSQL", "Docker", "Git"],
+    category: "LLMs & ML",
+    items: [
+      "PyTorch",
+      "Transformers",
+      "Embeddings",
+      "VLM",
+      "SAM",
+      "OCR",
+      "Scikit-Learn",
+      "XGBoost",
+      "Federated Learning",
+    ],
   },
   {
-    category: "Cloud",
-    items: ["AWS", "GCP", "GitHub Actions"],
+    category: "Web & Backend",
+    items: ["FastAPI", "Flask", "Next.js", "React", "Node.js", "Playwright", "PostgreSQL", "pgvector", "Docker"],
+  },
+  {
+    category: "Cloud & DevOps",
+    items: ["AWS", "GCP", "Cloud Run", "GitHub Actions", "CI/CD", "Git"],
   },
 ];
 
