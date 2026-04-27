@@ -15,8 +15,8 @@ export const projects = [
     id: 1,
     title: "GamED.AI",
     tag: "Ed-Tech",
-    award: "1st Place HackASU 2025",
-    des: "Multi-agent system on LangGraph generating Bloom's-aligned educational games from exam questions. Presented at ACL 2026 Demo.",
+    award: "1st Place HackASU 2025 · ACL 2026 Demo",
+    des: "Multi-agent system on LangGraph generating Bloom's-aligned educational games from exam questions. Accepted at ACL 2026 Demo.",
     accent: "#C84B2F",
     icon: "graduation",
     iconLists: ["LangGraph", "FastAPI", "Next.js", "GCP"],
@@ -55,7 +55,7 @@ export const workExperience = [
     title: "Graduate AI Researcher",
     company: "CoRAL, Arizona State University",
     period: "Aug 2024 – Present",
-    desc: "Published at EACL 2026. 3 papers under review at ACL 2026. Building multi-agent evaluation frameworks, LLM robustness tools, and AI safety systems. 1st place at HackASU 2025 and 2026.",
+    desc: "Published at EACL 2026. 2 papers accepted and 1 under review at ACL 2026. Building multi-agent evaluation frameworks, LLM robustness tools, and AI safety systems. 1st place at HackASU 2025 and 2026.",
   },
   {
     id: 2,
@@ -75,13 +75,13 @@ export const publications = [
   },
   {
     title: "GamED.AI: Multi-Agent Educational Game Generation",
-    venue: "ACL 2026",
-    status: "Under Review" as const,
+    venue: "ACL 2026 Demo",
+    status: "Accepted" as const,
   },
   {
     title: "DeALOG: Decentralized Multi-Agent Multimodal QA",
-    venue: "ACL 2026",
-    status: "Under Review" as const,
+    venue: "ACL 2026 Findings",
+    status: "Accepted" as const,
     link: "https://arxiv.org/abs/2602.00996",
   },
 ];

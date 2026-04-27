@@ -70,7 +70,7 @@ const item = {
 const stats = [
   { label: "EACL 2026", note: "Published" },
   { label: "1st Place ×2", note: "HackASU '25 & '26" },
-  { label: "4 Papers", note: "3 under review" },
+  { label: "4 Papers", note: "3 accepted, 1 in review" },
   { label: "3+ yrs", note: "Industry" },
 ];
 

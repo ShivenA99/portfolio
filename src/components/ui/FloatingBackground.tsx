@@ -82,8 +82,8 @@ const ResearchPreview = (
       </span>
       <div style={{ height: 1, background: "var(--border)" }} />
       <div className="flex items-center gap-1.5">
-        <div className="w-1.5 h-1.5 rounded-full" style={{ background: "#f59e0b", flexShrink: 0 }} />
-        <span style={{ fontSize: 8, fontFamily: "var(--font-mono)", color: "#b45309", letterSpacing: "0.06em" }}>ACL 2026 · Review</span>
+        <div className="w-1.5 h-1.5 rounded-full" style={{ background: "#22c55e", flexShrink: 0 }} />
+        <span style={{ fontSize: 8, fontFamily: "var(--font-mono)", color: "#16a34a", letterSpacing: "0.06em" }}>ACL 2026 Demo · Accepted</span>
       </div>
       <span style={{ fontSize: 10, fontWeight: 600, color: "var(--fg)", fontFamily: "var(--font-heading)", lineHeight: 1.35 }}>
         GamED.AI
